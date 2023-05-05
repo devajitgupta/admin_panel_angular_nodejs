@@ -1,0 +1,34 @@
+<app-header></app-header>
+<section>
+  <div class="container">
+    <div class="login">
+      <div class="login-form">
+
+        <mat-card>
+          <h1>Login</h1>
+          <mat-card-content>
+            <form [formGroup]="regForm" (ngSubmit)="userLogin()">
+
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" id="email" formControlName="email">
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="text" class="form-control" name="password" id="password" formControlName="password">
+              </div>
+              <button mat-raised-button type="submit">Login</button>
+              <button mat-raised-button type="submit" routerLink='/register-user'>Register</button>
+
+            </form>
+          </mat-card-content>
+
+
+
+        </mat-card>
+
+      </div>
+    </div>
+  </div>
+</section>
+

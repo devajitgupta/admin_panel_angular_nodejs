@@ -10,15 +10,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterUserComponent } from './dashboard/register-user/register-user.component';
 import { AllUsersComponent } from './dashboard/all-users/all-users.component';
 import { HeaderComponent } from './dashboard/header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import { RegisterEmployeeComponent } from './dashboard/register-employee/register-employee.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,RegisterUserComponent, AllUsersComponent, HeaderComponent
+    DashboardComponent,RegisterUserComponent, AllUsersComponent, HeaderComponent, RegisterEmployeeComponent
     
   ],
   imports: [ReactiveFormsModule,RouterModule,FormsModule,
-    BrowserModule,HttpClientModule,
-    AppRoutingModule,MaterialModules
+    BrowserModule,HttpClientModule,MatCardModule,
+    AppRoutingModule,MaterialModules, BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

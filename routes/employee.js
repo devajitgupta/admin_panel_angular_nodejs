@@ -6,6 +6,7 @@ const Employees = require('../models/employee');
 
 
 router.post('/employees', async (req, res) => {
+	console.log("data saved")
 	const user = new Employees({
 		name: req.body.name,
 		email: req.body.email,
@@ -22,6 +23,15 @@ router.post('/employees', async (req, res) => {
 
 	}
 })
+router.get('/',async (req,res)=>{
+	console.log("all users getting")
+	try{
+		const users=await Employees.find();
+		res.json(users);
+	}catch(error){
+		res.json({message:error})
+	}
+});
 
 
 
@@ -30,7 +40,7 @@ router.put('/:id', async (req, res) => {
 
 	try {
 		const _id = req.params.id;
-		const getUser = await User.findOneAndUpdate(_id, req.body, {
+		const getUser = await Employees.findOneAndUpdate(_id, req.body, {
 			new: true
 		});
 		res.send(getUser);

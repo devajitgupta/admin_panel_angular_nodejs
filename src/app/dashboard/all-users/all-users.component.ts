@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Employee } from 'src/app/employee';
+import { registerEmployee } from 'src/app/registerEmployee';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeService } from 'src/app/employee.service';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -12,9 +12,9 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./all-users.component.css']
 })
 export class AllUsersComponent {
-  user: Employee[] = [];
-  displayedColumns:string[]=['id','role','name','email'];
-  dataSource!:MatTableDataSource<Employee>;
+  employee: registerEmployee[] = [];
+  displayedColumns:string[]=['id','name','email','salary','designation'];
+  dataSource!:MatTableDataSource<registerEmployee>;
   constructor(private router: Router, private api: EmployeeService) {
      
      this.getUsers();
@@ -24,13 +24,17 @@ export class AllUsersComponent {
   logout() {
     return this.api.LogOut();
   }
+  LoggedIn() {
+    return !!localStorage.getItem("token");
+  };
+  
 
   getUsers() {
     console.log("get data")
     this.api.getUsers()
       .subscribe(data => {
-        this.user = data;
-        console.log(this.user)
+        this.employee = data;
+        console.log(this.employee)
       });
   }
 

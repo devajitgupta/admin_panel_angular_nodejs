@@ -64,14 +64,6 @@ router.post('/login', async (req, res) => {
 });
 
 // get all employee information 
-router.get('/all-employee',async (req,res)=>{
-	try{
-		const users=await User.find();
-		res.json(users);
-	}catch(error){
-		res.json({message:error})
-	}
-});
 
 
 

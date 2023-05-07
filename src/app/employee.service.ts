@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Employee } from './employee';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { registerEmployee } from './registerEmployee';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 @Injectable({
@@ -28,8 +29,14 @@ export class EmployeeService {
     return this.http.post<any>
       (this.url + 'register', emp, this.httpOptions);
   }
-  getUsers(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.url+'all-employee');
+  getUsers(): Observable<registerEmployee[]> {
+    return this.http.get<registerEmployee[]>(this.url);
+  }
+
+  // -- add a employee
+  AddUsers(employee:any){
+    return this.http.post<any>
+    (this.url +'employees',employee,this.httpOptions)
   }
 
   createLogin(emp: any) {

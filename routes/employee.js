@@ -11,7 +11,8 @@ router.post('/employees', async (req, res) => {
 		name: req.body.name,
 		email: req.body.email,
 		salary:req.body.salary,
-        designation:req.body.designation
+        designation:req.body.designation,
+		role:req.body.role
 	})
 	try {
 		const savedUser = await user.save();

@@ -8,7 +8,7 @@
   <div *ngIf=LoggedIn()>
   <button mat-raised-button routerLink="/all-users">All Employee</button>
 
-  <button mat-raised-button routerLink="/register-employee  ">Add Employee</button>
+  <button mat-raised-button routerLink="/register-employee">Add Employee</button>
   <button mat-raised-button routerLink="/login">Login</button>
   <button mat-raised-button (click)="logout()">Logout</button>
 
@@ -44,6 +44,11 @@
     <ng-container matColumnDef="designation">
       <th mat-header-cell *matHeaderCellDef> DESIGNATION </th>
       <td mat-cell *matCellDef="let employee"> {{ employee.designation }} </td>
+    </ng-container>
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef> Role </th>
+      <td  mat-cell *matCellDef="let employee">{{ employee.role }} <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

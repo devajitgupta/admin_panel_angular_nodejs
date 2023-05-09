@@ -12,8 +12,9 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./all-users.component.css']
 })
 export class AllUsersComponent {
+  regForm!:FormGroup;
   employee: registerEmployee[] = [];
-  displayedColumns:string[]=['id','name','email','salary','designation'];
+  displayedColumns:string[]=['id','name','email','salary','designation','role'];
   dataSource!:MatTableDataSource<registerEmployee>;
   constructor(private router: Router, private api: EmployeeService) {
      
@@ -36,6 +37,10 @@ export class AllUsersComponent {
         this.employee = data;
         console.log(this.employee)
       });
+  }
+
+  onEdit(){
+  console.log(this.employee.values)  
   }
 
 }

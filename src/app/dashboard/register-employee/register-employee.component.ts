@@ -13,6 +13,11 @@ import { Router } from '@angular/router';
 export class RegisterEmployeeComponent {
   regForm!:FormGroup;
   emp: registerEmployee[] = [];
+  roles = [
+    {  name: "admin" },
+    {  name: "manager" },
+    {  name: "employee" }
+  ];
 
 
 
@@ -26,7 +31,9 @@ export class RegisterEmployeeComponent {
       name:['',[Validators.required]],
       email:['',[Validators.required]],
       salary:['',[Validators.required]],
-      designation:['',[Validators.required]]
+      designation:['',[Validators.required]],
+      role:['',[Validators.required]]
+
 
     })
   }

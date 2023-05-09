@@ -13,6 +13,9 @@ const employeesSchema= new mongoose.Schema({
     },
     designation:{
         type:String
+    },
+    role:{
+        type:String
     }
 });
 

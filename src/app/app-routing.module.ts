@@ -9,7 +9,7 @@ const routes: Routes = [
   {path:'', pathMatch:'full', redirectTo:'dashboard'},
   {path:'dashboard', component:DashboardComponent},
   {path:'register-user', component:RegisterUserComponent},
-  {path:'all-users' ,canActivate: [AuthGuard], component:AllUsersComponent},
+  {path:'all-users' , component:AllUsersComponent},
   {path:'login' , component:DashboardComponent},
   {path:'register-employee',component:RegisterEmployeeComponent}
 

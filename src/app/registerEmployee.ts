@@ -3,6 +3,6 @@ export interface registerEmployee {
     name:string,
     email:string,
     salary:string,
-    designation:string
-
+    designation:string,
+    role:string
 }

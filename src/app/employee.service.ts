@@ -8,7 +8,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class EmployeeService {
-  
+  selectedEmployee!: registerEmployee;
+  employees!: registerEmployee[];
+
+
+
+
 
   url = 'http://localhost:3000/';
   loginUrl = 'http://localhost:3000/login'
@@ -29,6 +34,7 @@ export class EmployeeService {
     return this.http.post<any>
       (this.url + 'register', emp, this.httpOptions);
   }
+  // get all employees
   getUsers(): Observable<registerEmployee[]> {
     return this.http.get<registerEmployee[]>(this.url);
   }
@@ -54,5 +60,12 @@ export class EmployeeService {
   logout() {
     window.sessionStorage.clear();
   }
+
+  // update employeee
+  putEmployee(emp: registerEmployee) {
+    return this.http.put(this.url + `/${emp.id}`, emp, this.httpOptions);
+  }
+
+  
 
 }

@@ -1,6 +1,9 @@
 const mongoose=require('mongoose');
 
 const employeesSchema= new mongoose.Schema({
+    id:{
+        type:String
+    },
     name:{
         type:String},
     email:{

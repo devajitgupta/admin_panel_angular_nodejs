@@ -14,9 +14,9 @@ export class RegisterEmployeeComponent {
   regForm!:FormGroup;
   emp: registerEmployee[] = [];
   roles = [
-    {  name: "admin" },
-    {  name: "manager" },
-    {  name: "employee" }
+    {  name: "ADMIN" },
+    {  name: "MANAGER" },
+    {  name: "EMPLOYEE" }
   ];
 
 
@@ -41,7 +41,7 @@ export class RegisterEmployeeComponent {
   onSubmit(){
     console.log("Submit ")
     if(this.regForm.valid){
-      this.api.AddUsers(this.regForm.value).subscribe(res=>{
+      this.api.createEmployee(this.regForm.value).subscribe(res=>{
         console.log(res);
         this.regForm.reset();
         this.router.navigate(["/all-users"])

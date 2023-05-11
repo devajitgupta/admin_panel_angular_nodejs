@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const varify = require('./verifyToken');
 const verifyToken = require('./verifyToken');
-
+const mongoose =require('mongoose');
 
 
 router.post('/register', async (req, res) => {
@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
 		name: req.body.name,
 		email: req.body.email,
 		password: hashedPassword,
-		role:role
+	
 	})
 	try {
 		const savedUser = await user.save();
@@ -54,11 +54,12 @@ router.post('/login', async (req, res) => {
 	if (!user) return res.status(402).send("Email Id is wrong");
 
 	// comapre sent in password with found user password
+
 	const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 	if (!passwordMatch) return res.status(402).send("password");
-
+	
 	//-- create and asign a token
-	const Token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+	const Token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET);
 	res.header("auth-token", Token).send({ token: Token });
 	console.log("login routes working");
 });
@@ -107,6 +108,13 @@ router.delete('/:id', async (req, res) => {
 	}
 });
 
+router.get('/',(re,res)=>{
+	console.log("as")
+	const userId='645bb8aec74c8bf448715ce9';
+	User.findById(userId).exec().then((data)=>{
+		res.json({success:true, data:data});
+	});
+})
 
 router.post('/logout', (req,rs)=>{
 	res.token('auth-token');

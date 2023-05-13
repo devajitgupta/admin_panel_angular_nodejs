@@ -24,16 +24,6 @@ router.post('/employees', async (req, res) => {
 
 	}
 })
-router.get('/',async (req,res)=>{
-	console.log("all users getting")
-	try{
-		const users=await Employees.find();
-		res.json(users);
-	}catch(error){
-		res.json({message:error})
-	}
-});
-
 
 
 router.put(':id', async (req, res) => {

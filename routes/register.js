@@ -1,12 +1,88 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+//const Role = require('../models/user');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const varify = require('./verifyToken');
 const verifyToken = require('./verifyToken');
 const mongoose =require('mongoose');
 
+//--------------------------------------------------
+// Middleware to check if user is admin
+const isAdmin = (req, res, next) => {
+	if (req.user && req.user.role === 'admin') {
+	  next();
+	} else {
+	  res.status(401).json({ message: 'Unauthorized' });
+	}
+  }
+  
+  // Middleware to check if user is manager or admin
+  const isManagerOrAdmin = (req, res, next) => {
+	if (req.user && (req.user.role === 'manager' || req.user.role === 'admin')) {
+	  next();
+	} else {
+	  res.status(401).json({ message: 'Unauthorized' });
+	}
+  }
+  
+  // Middleware to check if user is employee or admin
+  const isEmployeeOrAdmin = (req, res, next) => {
+	if (req.user && (req.user.role === 'employee' || req.user.role === 'admin')) {
+	  next();
+	} else {
+	  res.status(401).json({ message: 'Unauthorized' });
+	}
+  }
+
+  // Get all users (only admin and manager can access)
+  router.get('/users', isAdmin, async (req, res) => {
+	try {
+	  const users = await User.find();
+	  res.json(users);
+	} catch (err) {
+	  res.status(500).json({ message: err.message });
+	}
+  });
+  
+  // Get current user's information (employee or admin can access)
+  router.get('/me', isEmployeeOrAdmin, async (req, res) => {
+	try {
+	  const user = await User.findById(req.user._id);
+	  res.json(user);
+	} catch (err) {
+	  res.status(500).json({ message: err.message });
+	}
+  });
+  
+  // Get a specific user's information (only admin and manager can access)
+  router.get('/users/:id', isManagerOrAdmin, async (req, res) => {
+	try {
+	  const user = await User.findById(req.params.id);
+	  res.json(user);
+	} catch (err) {
+	  res.status(500).json({ message: err.message });
+	}
+  });
+  /*
+  // Create a new user (only admin and manager can create)
+  app.post('/users', isManagerOrAdmin, async (req, res) => {
+	// implementation of user creation
+  });
+  
+  // Update a user (only admin and manager can update)
+  app.put('/users/:id', isManagerOrAdmin, async (req, res) => {
+	// implementation of user update
+  });
+  
+  // Delete a user (only admin and manager can delete)
+  app.delete('/users/:id', isManagerOrAdmin, async (req, res) => {
+	// implementation of user deletion
+  });
+  
+*/
 
 router.post('/register', async (req, res) => {
 	const emailExist = await User.findOne({
@@ -69,15 +145,17 @@ router.post('/login', async (req, res) => {
 
 
 // get single user
-router.get("/:id", async (req, res) => {
-	try {
-		const user = await User.findById(req.params.id);
-		res.json(user);
-
-	} catch (error) {
-		res.json({ message: error });
+router.get('/all-users',async (req,res)=>{
+	console.log("all users route")
+	console.log("all users getting")
+	try{
+		const users=await User.find();
+		res.json(users);
+	}catch(error){
+		res.json({message:error})
 	}
 });
+
 
 router.put('/:id', async (req, res) => {
 	console.log("put response new")
@@ -108,18 +186,31 @@ router.delete('/:id', async (req, res) => {
 	}
 });
 
-router.get('/',(re,res)=>{
+router.get('/aa',(re,res)=>{
 	console.log("as")
 	const userId='645bb8aec74c8bf448715ce9';
 	User.findById(userId).exec().then((data)=>{
 		res.json({success:true, data:data});
 	});
 })
-
+ 
 router.post('/logout', (req,rs)=>{
 	res.token('auth-token');
 	res.status(200).json({ message: 'User logged out' });
 
 })
 
+
+router.post('/role',(req,res)=>{
+	console.log()
+	const role=new Role({
+		user_id:req.body.user_id,
+		admin:req.body.admin,
+		manager:req.body.manager,
+		employee:req.body.employee
+
+	});
+	const saveRole=role.save();
+	res.send(saveRole);
+})
 module.exports = router;
